@@ -1,8 +1,8 @@
 # The Title
 
-Something about why this is neat. 
-About adding a bit of modern web development into PHP. 
-Why WordPress is not going away.
+It's a really good time to be a Frontend Javascript developer, with frameworks like React, Vue, Svelte, etc managing a lot of the heavy lifting. WordPress is a popular CMS in web development, [powering 39.5% of websites, and 14.7% of top websites.](https://kinsta.com/blog/wordpress-statistics/#usage-statistics) but much of it is written in PHP. 
+
+This post will show you how to create a Vue App inside WordPress.
 
 ## Introduction
 I used Jake Paris' [Using a Vue app within a WordPress Plugin](https://jake.paris/blog/2020/06/23/using-a-vue-app-within-a-wordpress-plugin/) as a kickoff point for this tutorial. If you're confused by anything, feel free to reference his post for more clarity. 
@@ -22,19 +22,18 @@ Note: There's a bunch of different ways to do this. Lisa Armstrong's [dev.to pos
 
 In other words - if you can build it in Vue, you can make it appear as a WordPress shortcode.
 
-## Sequence of Events
+## Process: 
 
 If you're having trouble, the final code is located in [this Repo](https://github.com/RockyKev/wordpress-vue-author). 
 I'll be using `npm`. 
 
-Process: 
+We'll run through everything from setting up your WordPress environment/WordPress plugin, to creating the Vue plugin.
+
+Let's begin: 
 
 Step 1: Create a WordPress plugin. 
 Step 2: Create a Vue App. 
-Step 3: Test to see if everything is working.
-Step 4: Add PHP data to the file.
-Step 5: Update the Vue Plugin to get the data, and pass the data. 
-Step 6: Conclusion. 
+Step 3: Get Vue working inside of our WordPress plugin shortcode
 
 ## Step 1: Create a WordPress Plugin
 
@@ -59,11 +58,11 @@ For those who want more control, I also highly recommend [Devilbox](http://devil
 
 ```
 
-Add the following content in there. Shortcode.
-
+Add the following content in there. 
 NOTE: Much of this was yoinked from: https://wppb.me/
 
 ```php 
+// inside vue-author-generator.php
 <?php
 
 /**
@@ -100,7 +99,7 @@ define('AUTHOR_GENERATOR_VUE', '1.0.0');
 
 // Invoke Shortcode
 function vue_author_generator() {
-    return "<p>Hello there. General Kenobi.</p>"; // Replace with Nick Cage Reference
+    return "<p>I love pressure, I eat it for breakfast!</p>"; 
 }
 
 add_shortcode('generate-author-vue', 'vue_author_generator');
@@ -142,19 +141,26 @@ How this works is that inside our WordPress plugin is a Vue app. The WordPress p
 
 1. Install the [vue-cli](https://cli.vuejs.org/guide/) with `npm install -g @vue/cli`
 
-This will allow us to use the vue command in our terminal.
+This will allow us to use the Vue command in our terminal.
 
 2. Navigate to your WordPress Plugin. 
 
 `/wp-contents/plugins/`
 
-3. Generate a new vue project called `app` 
+3. Generate a new Vue project called `app` 
 
 ```
 plugins
 └───vue-author-generator/
    │    
    └───app                          ## Your Vue folder
+   │    │   
+   │    └───dist                    ## When you build files
+   │    └───node_modules                       
+   │    └───public                          
+   │    └───src                     ## Where you modify files   
+   │    └───package.json
+   │         ...
    │    
    └───vue-author-generator.php
 ```
@@ -172,9 +178,10 @@ And while we're there, let's get sass.
 
 4. Add our new content in there.
 
-First, replace the App.Vue with this:
+First, replace the App.vue with this:
+
 ```vue
-// vue-author-generator/app/App.Vue
+// We are inside `vue-author-generator/app/src/App.vue`
 
 <template>
   <div>
@@ -199,21 +206,7 @@ export default {
 
 Second, create a new compentent called AuthorBio
 ```vue
-
-	// $phpData = [
-	// 	'content' => [
-	// 		'image' => 'https://www.placecage.com/c/400/400',
-	// 		'name' => '	Dr. Stanley Goodspeed',
-	// 		'body' => "It's a Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-	// 	],
-	// 	'social' => [
-	// 		'facebook' => "https://facebook.com/",
-	// 		'linkedin' => "https://linkedin.com/",
-	// 		'twitter' => "https://twitter.com/",
-	// 		'website' => "https://placeholder.com/"
-	// 	]
-	// ];
-
+// We are inside `vue-author-generator/app/src/components/Author.vue`
 
 <template>
   <div class="authorbox">
@@ -238,12 +231,6 @@ Second, create a new compentent called AuthorBio
     </div>
   </div>
 </template>
-
-
-<script>
-export default {
-};
-</script>
 
 <template>
   <div class="authorbox">
@@ -322,32 +309,30 @@ export default {
 
 `cd app`
 `vue run serve` 
-It'll open the vue project in [http://localhost:8080/](http://localhost:8080/).
+It'll open the Vue project in [http://localhost:8080/](http://localhost:8080/).
 
 If everything worked, you should see your author page.
 
 [SCREENSHOT]https://i.imgur.com/NJ7RdXY.png
 
 
-
-
-## Step 3: Let's get Vue working inside of our WordPress plugin shortcode
+## Step 3: Get Vue working inside of our WordPress plugin shortcode
 
 This is the complicated part. 
-We now need to pass the Vue data over to PHP. PHP will then output the vue app inside the shortcode. 
+We now need to pass the Vue data over to PHP. PHP will then output the vue App inside the shortcode. 
 
 1. Preparing the Vue side 
-## TODO: maybe this first?
-This is where we are replacing the inner content with our placeholder content. 
 
-`npm run build` To create a `dist` folder. 
+First, `npm run build` To create a `dist` folder. 
 
-Create a vue.config.js
-https://cli.vuejs.org/config/#global-cli-config
+Next, we'll need to create a [vue.config.js](https://cli.vuejs.org/config/#global-cli-config) inside the `app` folder. 
 
-and chainWebpack (https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin)
+By default, Vue appends a hash to files in your `dist` folder. We need to disable that to make it work with PHP. We'll also need to modify some Vue Webpack configs, which we'll use the [chainWebpack](and chainWebpack (https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin)) method.
 
 ```js
+
+// this is located in wordpress-vue-author/app/vue.config.js
+
 module.exports = {
     filenameHashing: false,
     publicPath: "./",
@@ -373,10 +358,8 @@ module.exports = {
     productionSourceMap: false,
   };
 ```
+*This was borrowed from Jake Paris' [Using a Vue app within a WordPress Plugin](https://jake.paris/blog/2020/06/23/using-a-vue-app-within-a-wordpress-plugin/) post.*
 
-This was borrowed from [THE ORIGINAL GUY]
-
-SOmething to note: By default, vue appends a hash to files in your `dist` folder. We need to disable that to make it work with PHP.
 
 2. Preparing wordpress side
 
@@ -384,7 +367,7 @@ Now open up `vue-author-generator.php`
 Your Function should now look like this.
 
 ```php
-<!-- inside vue-author-generator.php -->
+<!-- We are inside wordpress-vue-author/vue-author-generator.php -->
 
 function vue_author_generator() {
     // get Vue libs 
@@ -400,30 +383,19 @@ function vue_author_generator() {
 }
 ```
 
-What's happening is that we are [registering and enqueuing js/css files the WordPress way](https://www.wpbeginner.com/wp-tutorials/how-to-properly-add-javascripts-and-styles-in-wordpress/)
+What's happening is that:
 
-We're getting the Vue dependencies, the App's CSS and your vue App code.
+First, [registering and enqueuing js/css files the WordPress way](https://www.wpbeginner.com/wp-tutorials/how-to-properly-add-javascripts-and-styles-in-wordpress/).
 
-That code is going to be outputted in that `<div id="app"></div>` element.
+Second, getting the Vue dependencies, the App's CSS and your Vue App code.
 
+Finally, that code is going to be outputted in that `<div id="app"></div>` element.
 
-3. If everything was set up correctly, your vue app should now appear in WordPress. Woohoo!
+3. If everything was set up correctly, your Vue app should now appear in WordPress. Woohoo!
 
 [SCREENSHOT] https://i.imgur.com/GwhBOI6.png
 
-
-## Stop here:
-You can stop here and just directly code in Vue. You're good to go. 
-But one of the benefits of WordPress is that a enduser can use the WordPress 
-
-## Step 4:  Add PHP data to the file.
-
-
-
-
-## Step 5:  Update the Vue Plugin to get the data, and pass the data. 
-Add the vue.config.js here?
-
-
 ## Conclusion
+
+This is the first step. You can now make a fully-realized Vue App inside WordPress, and have it called by shortcode. You can even migrate it out of the shortcode into a [WordPress Page template](https://www.smashingmagazine.com/2015/06/wordpress-custom-page-templates/). And additionally, in a future blog post, I'll explain how to pass data from the WordPress CMS, into your Vue Plugin, and have it outputted within Vue. 
 
