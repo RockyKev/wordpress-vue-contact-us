@@ -1,6 +1,8 @@
 # The Title
 
-
+Something about why this is neat. 
+About adding a bit of modern web development into PHP. 
+Why WordPress is not going away.
 
 ## Introduction
 I used Jake Paris' [Using a Vue app within a WordPress Plugin](https://jake.paris/blog/2020/06/23/using-a-vue-app-within-a-wordpress-plugin/) as a kickoff point for this tutorial. If you're confused by anything, feel free to reference his post for more clarity. 
@@ -14,21 +16,15 @@ Note: There's a bunch of different ways to do this. Lisa Armstrong's [dev.to pos
 
 ## How does this work?
 
-How this works is that you're building a WordPress plugin using PHP. Your Vue app gets compiled/built, and then passes all the necessary data to the page via a shortcode.
-
-What's happening behind the scenes:
-
-1. Your plugin is PHP code that looks for a [WP shortcode](), and calls your PHP code.
-2. Your PHP code is creating the necessary things to set up your Vue code. You'll also pass data from PHP -> Vue.
-3. The Vue app gets that PHP data, and with the rest of your Vue code, compiles into Javascript. 
-4. That Javascript gets mounted into a html element, that was generated in step 2. 
+1. We are building a WordPress plugin in PHP. The plugin sets up JS dependencies and outputs our Vue App.
+2. We are generating a Vue App inside the plugin. It'll be an Author app.
+4. That Vue App gets mounted into a html element, that was generated in step 1. 
 
 In other words - if you can build it in Vue, you can make it appear as a WordPress shortcode.
 
-
 ## Sequence of Events
 
-Take a look at the repo. [REPO](#) 
+If you're having trouble, the final code is located in [this Repo](https://github.com/RockyKev/wordpress-vue-author). 
 I'll be using `npm`. 
 
 Process: 
