@@ -1,0 +1,21 @@
+{
+  "name": "vue-contact-us",
+  "version": "1.0.0",
+  "description": "An example of creating a Vue based plugin",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm install --prefix ./app",
+    "build:app": "npm run build --prefix ./app",
+    "serve:app": "npm run serve --prefix ./app"
+  },
+  "author": "RK",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RockyKev/wordpress-vue-contact-us.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RockyKev/wordpress-vue-contact-us/issues"
+  },
+  "homepage": "https://github.com/RockyKev/wordpress-vue-contact-us#readme"
+}

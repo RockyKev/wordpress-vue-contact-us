@@ -10,12 +10,12 @@
  *
  * @link              #
  * @since             1.0.0
- * @package           Vue Author Generator
+ * @package           Vue Contact Us
  *
  * @wordpress-plugin
- * Plugin Name:       Vue Author Generator 2
+ * Plugin Name:       Vue Contact Us
  * Plugin URI:        #
- * Description:       This creates a Vue Author that passes PHP data to a a plugin.
+ * Description:       This creates a Vue App that generates data to PHP and sends a email.
  * Version:           1.0.0
  * Author:            Your Name Here
  * Author URI:        #
@@ -33,14 +33,9 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('AUTHOR_GENERATOR_VUE', '1.0.0');
+define('VUE_CONTACT_US', '1.0.0');
 
-// Invoke Shortcode
-function test_hello_world() {
-    return "<p>Hello there. General Kenobi.</p>";
-}
-
-function vue_author_generator() {
+function vue_contact_us() {
     // get Vue libs 
 	wp_register_script('vue-app-vendors',  plugins_url('app/dist/js/chunk-vendors.js', __FILE__), array(), '1.0.0');
 	wp_register_script('my-vue-app', plugins_url('app/dist/js/app.js', __FILE__), array('vue-app-vendors'), '1.0.0');
@@ -56,4 +51,4 @@ function vue_author_generator() {
 
 // TODO: Change this shortcode call sign
 
-add_shortcode('generate-author-vue', 'vue_author_generator');
+add_shortcode('contact-us-vue', 'vue_contact_us');

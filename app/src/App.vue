@@ -1,19 +1,16 @@
 <template>
   <div>
-    <!-- <HelloWorld /> -->
-    <AuthorBio />
+    <ContactUs />
   </div>
 </template>
 
 <script>
-import AuthorBio from "./components/AuthorBio.vue";
-// import HelloWorld from "./components/HelloWorld.vue";
+import ContactUs from "./components/ContactUs.vue";
 
 export default {
   name: "App",
   components: {
-    AuthorBio,
-    // HelloWorld
+    ContactUs
   },
 };
 </script>
