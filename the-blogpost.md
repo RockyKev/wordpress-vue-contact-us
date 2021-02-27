@@ -168,13 +168,20 @@ plugins
 
 `vue create app`
 
-This will generate your Vue App. Go with Vue 3. 
-I'll be using some specific Vue 3 set-up code, which may require some minor adjustments to work with Vue 2. 
+This will generate your Vue App. 
+
+Here's my settings: 
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Choose Vue version, Babel, CSS Pre-processors, Linter
+? Choose a version of Vue.js that you want to start the project with 3.x (Preview)
+? Pick a CSS pre-processor (PostCSS, Autoprefixer and CSS Modules are supported by default): Sass/SCSS (with dart-sass)
+...
+The other choices are personal preferences. 
+
 
 It should take a few minutes to install.
 
-And while we're there, let's get sass.
-`npm install -D sass-loader sass`
+
 
 4. Add our new content in there.
 
