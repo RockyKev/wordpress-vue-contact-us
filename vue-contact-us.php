@@ -45,10 +45,12 @@ function vue_contact_us() {
 	wp_enqueue_script('my-vue-app');
     wp_enqueue_style('my-vue-app',  plugins_url('app/dist/css/app.css', __FILE__),   array(),  '1.0.0');
     
+	// pass plugin directory
+	$wp_plugin_uri = plugin_dir_path( __FILE__ );
+
+	wp_localize_script('my-vue-app', 'wpPluginUri', $wp_plugin_uri);	
+
     return '<div id="app"></div>';
 }
-
-
-// TODO: Change this shortcode call sign
 
 add_shortcode('contact-us-vue', 'vue_contact_us');

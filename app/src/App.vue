@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ContactUs />
+    <ContactUs :endpoint="wpPluginUri" />
   </div>
 </template>
 
@@ -12,6 +12,12 @@ export default {
   components: {
     ContactUs
   },
+  props: {
+    wpPluginUri: String,
+  },
+  // mounted() {
+  //   console.log(this.wpPluginUri);
+  // },
 };
 </script>
 

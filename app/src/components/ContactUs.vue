@@ -12,7 +12,11 @@
 
       <div class="form-input">
         <label for="fName">First Name<span class="red">*</span>:</label>
-        <input id="fName" v-model="data['first name']" placeholder="Firstname" />
+        <input
+          id="fName"
+          v-model="data['first name']"
+          placeholder="Firstname"
+        />
       </div>
 
       <div class="form-input">
@@ -146,8 +150,10 @@
 
     <div class="debug">
       <h2>This data gets sent to PHP</h2>
-      <pre><code>{{ data }}
-          </code></pre>
+      <pre>
+        <code>{{ data }}</code>
+        <code>Endpoint:{{endpoint}}</code>
+        </pre>
     </div>
   </div>
 </template>
@@ -156,7 +162,7 @@
 export default {
   name: "ContactUs",
   props: {
-    params: Object,
+    endpoint: String,
   },
   data: function () {
     return {
@@ -174,16 +180,33 @@ export default {
     };
   },
   methods: {
+    submitAnyways() {
+      this.axios
+        .post(this.endpoint + "/vue-contact-us-submit.php", {
+          request: 2,
+          name: "test",
+          email: "test2",
+        })
+        .then(function (response) {
+          console.log(response);
+          if (response.data[0].status == 1) {
+            alert("Data saved successfully");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     beforeSubmit() {
       // check if all data values that are important are filled;
       // exit if not
-      if (!this.isAllRequiredFilled(this.data)) return;
+      // if (!this.isAllRequiredFilled(this.data)) return;
 
-      console.log("I have successfully posted");
+      this.submitAnyways();
+      console.log("I am submitting");
     },
     isEmailCorrect(email) {
       // yoinked from https://stackoverflow.com/a/9204568/4096078
-
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
     },
@@ -227,6 +250,11 @@ export default {
         return true;
       }
     },
+  },
+  mounted() {
+    console.log("Inside contactus");
+    console.log(typeof(this.endpoint));
+    console.log(this.endpoint);
   },
 };
 </script>

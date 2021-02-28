@@ -38,3 +38,7 @@ Spash image
 Video
 FAQ
 Social Media buttons
+
+
+## Error
+https://i.imgur.com/GZH2itQ.png
