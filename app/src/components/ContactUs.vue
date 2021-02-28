@@ -12,11 +12,7 @@
 
       <div class="form-input">
         <label for="fName">First Name<span class="red">*</span>:</label>
-        <input
-          id="fName"
-          v-model="data['first name']"
-          placeholder="Firstname"
-        />
+        <input id="fName" v-model="data['first name']" placeholder="Firstname" />
       </div>
 
       <div class="form-input">
