@@ -102,7 +102,7 @@
         <label for="userMessage">Message<span class="red">*</span>:</label>
         <textarea
           id="userMessage"
-          v-model="data['message ']"
+          v-model="data['message']"
           placeholder="Enter your query here"
         ></textarea>
       </div>
@@ -179,11 +179,11 @@ export default {
   },
   methods: {
     beforeSubmit() {
-      console.log("I'm here!");
-
       // check if all data values that are important are filled;
       // exit if not
       if (!this.isAllRequiredFilled(this.data)) return;
+
+      console.log("I have successfully posted");
     },
     isEmailCorrect(email) {
       // yoinked from https://stackoverflow.com/a/9204568/4096078
@@ -192,8 +192,6 @@ export default {
       return re.test(email);
     },
     isAllRequiredFilled(data) {
-      console.log("NOT HAPPY!");
-
       this.errors = [];
 
       // Copy the object to mutate safely
@@ -213,21 +211,25 @@ export default {
       }
 
       // validate email
-      if (!this.isEmailCorrect(newData["userEmail"])) {
+      if (!this.isEmailCorrect(newData["email"])) {
         this.errors.push("The email does not look correct");
       }
 
       // check if checkbox Values exist
+      if (!newData.checkboxValues.includes("acceptTerms")) {
+        this.errors.push("You must accept the terms");
+      }
+
       if (!newData.checkboxValues.includes("notRobot")) {
         this.errors.push("You must check that you are not a robot");
       }
 
-      if (!newData.checkboxValues.includes("acceptTerms")) {
-        this.errors.push("You must accept the turns");
+      // If there's any errors, return false
+      if (this.errors.length > 1) {
+        return false;
+      } else {
+        return true;
       }
-
-      // else fill errors and return false
-      if (this.errors.length > 1) return false;
     },
   },
 };
