@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="vue-form" @submit.prevent="submit">
+    <form id="form" class="vue-form" @submit.prevent="submit" method="post">
       <div class="error-messages" v-show="errors.length > 0">
         <p>Error Here!</p>
         <ul>
@@ -180,29 +180,37 @@ export default {
     };
   },
   methods: {
-    submitAnyways() {
-      this.axios
-        .post(this.endpoint + "/vue-contact-us-submit.php", {
-          request: 2,
-          name: "test",
-          email: "test2",
-        })
+    submitToPHP() {
+
+        this.axios
+        .post(this.endpoint + "vue-contact-us-submit.php", this.data)
         .then(function (response) {
+
           console.log(response);
-          if (response.data[0].status == 1) {
-            alert("Data saved successfully");
+
+          if (response.data == 202) {
+            alert("Email was sent.");
+          } else {
+            throw "Sendgrid Error: " + response.data;
           }
         })
         .catch(function (error) {
-          console.log(error);
+          console.error(error);
+         alert("Message Failed to Send.");
+
         });
     },
     beforeSubmit() {
-      // check if all data values that are important are filled;
-      // exit if not
-      // if (!this.isAllRequiredFilled(this.data)) return;
 
-      this.submitAnyways();
+      // check if all data values that are important are filled
+      if (!this.isAllRequiredFilled(this.data)) return;
+
+      // TODO: SANTIZIE INPUTS
+      console.log("being sent", this.data);
+
+
+      // Submit the Data
+      this.submitToPHP();
       console.log("I am submitting");
     },
     isEmailCorrect(email) {
@@ -221,7 +229,6 @@ export default {
       // check the object and add to errors
       for (const key in newData) {
         if (Array.isArray(newData[key])) break;
-        console.log({ key });
 
         if (newData[key] == null || newData[key].trim() == "") {
           const prettierWord = key[0].toUpperCase() + key.substring(1);
@@ -250,11 +257,6 @@ export default {
         return true;
       }
     },
-  },
-  mounted() {
-    console.log("Inside contactus");
-    console.log(typeof(this.endpoint));
-    console.log(this.endpoint);
   },
 };
 </script>
