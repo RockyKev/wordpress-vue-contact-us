@@ -11,160 +11,86 @@
       </div>
 
       <h2>THIS IS EVERYTHING IN COMPONENTS</h2>
-      <!-- <input-text v-model="data['first name']" placeholder="First Name">First NameComponent</input-text>
- -->
-
 
       <input-text
         v-model="data['first name']"
         type="Text"
         :required="true"
-        placeholder="Paul Rudd">First Name:</input-text>
+        placeholder="Paul"
+        >First Name:</input-text
+      >
 
-
-      <!-- <input-basic
-          v-model="data['first name']"
-        label="First Name:"
-        placeholder="Paul Rudd"
+      <input-text
+        v-model="data['last name']"
         type="Text"
-      />
- -->
+        :required="true"
+        placeholder="Rudd"
+        >Last Name:</input-text
+      >
 
-      <hr />
-      <h2>THIS IS THE DEFAULT</h2>
-      <!-- <div class="form-input">
-        <label for="fName">First Name<span class="red">*</span>:</label>
-        <input
-          id="fName"
-          v-model="data['first name']"
-          placeholder="Firstname"
-        />
-      </div> -->
+      <input-text
+        v-model="data['email']"
+        type="Email"
+        :required="true"
+        placeholder="theemail@website.com"
+        >Email:</input-text
+      >
 
-      <div class="form-input">
-        <label for="lName">Last Name<span class="red">*</span>:</label>
-        <input id="lName" v-model="data['last name']" placeholder="Lastname" />
-      </div>
+      <input-text
+        v-model="data['company']"
+        type="Text"
+        :required="true"
+        placeholder="Macrosoft"
+        >Company:</input-text
+      >
 
-      <div class="form-input">
-        <label for="userEmail">Email<span class="red">*</span>:</label>
-        <input
-          id="userEmail"
-          v-model="data['email']"
-          placeholder="theemail@website.com"
-        />
-      </div>
-
-      <div class="form-input">
-        <label for="userCompany">Company:</label>
-        <input
-          id="userCompany"
-          v-model="data['company']"
-          placeholder="Macrosoft"
-        />
-      </div>
-
+      <!-- TODO: All IDs are shared. They need to be refreshed -->
       <div class="form-radio-group">
         <p>Department<span class="red">*</span>:</p>
-
-        <div>
-          <div class="form-radio">
-            <input
-              type="radio"
-              id="departmentCS"
-              v-model="data['department']"
-              value="departmentCS"
-            />
-            <label for="departmentCS">Customer Service</label>
-          </div>
-
-          <div class="form-radio">
-            <input
-              type="radio"
-              id="departmentIT"
-              v-model="data['department']"
-              value="departmentIT"
-            />
-            <label for="departmentIT">IT Issue</label>
-          </div>
-
-          <div class="form-radio">
-            <input
-              type="radio"
-              id="departmentBill"
-              v-model="data['department']"
-              value="departmentBill"
-            />
-            <label for="departmentBill">Billing</label>
-          </div>
-
-          <div class="form-radio">
-            <input
-              type="radio"
-              id="departmentOther"
-              v-model="data['department']"
-              value="departmentOther"
-            />
-            <label for="departmentOther">Other</label>
-          </div>
-        </div>
-      </div>
-      <div class="form-input">
-        <label for="subjectLine"
-          >Email Subject Line<span class="red">*</span>:</label
+        <input-radio
+          v-model="data['department']"
+          value="department123"
+          :inputID="butts"
+          >Customer Service</input-radio
         >
-        <input
-          id="subjectLine"
-          v-model="data['subject line']"
-          placeholder="Reaching out for help"
-        />
+
+        <input-radio
+          v-model="data['department']"
+          value="departmentIT"
+          :inputID="nuutts"
+          >IT Issue</input-radio
+        >
+
+        <input-radio v-model="data['department']" value="departmentBill"
+          >Billing</input-radio
+        >
       </div>
 
-      <div class="form-textarea">
-        <label for="userMessage">Message<span class="red">*</span>:</label>
-        <textarea
-          id="userMessage"
-          v-model="data['message']"
-          placeholder="Enter your query here"
-        ></textarea>
-      </div>
+      <input-text
+        v-model="data['subject line']"
+        type="Text"
+        :required="true"
+        placeholder="Reaching out for help"
+        >Email Subject Line:</input-text
+      >
+
+      <input-text-area
+        v-model="data['message']"
+        :required="true"
+        placeholder="Enter your query here"
+        >Message:
+      </input-text-area>
 
       <div class="form-checkbox-group">
-        <div class="form-checkbox">
-          <input
-            type="checkbox"
-            id="checkboxSubscribe"
-            value="subscribe"
-            v-model="data.checkboxValues"
-          />
-          <label for="checkboxSubscribe"
-            >I want to subscribe to the email list</label
-          >
-        </div>
-
-        <div class="form-checkbox">
-          <input
-            type="checkbox"
-            id="checkboxTerms"
-            value="acceptTerms"
-            v-model="data.checkboxValues"
-          />
-          <label for="checkboxTerms"
-            >I accept Terms & Conditions<span class="red">*</span></label
-          >
-        </div>
-
-        <div class="form-checkbox">
-          <input
-            type="checkbox"
-            id="checkboxNotRobot"
-            value="notRobot"
-            v-model="data.checkboxValues"
-          />
-          <label for="checkboxNotRobot"
-            >I am not a robot<span class="red">*</span></label
-          >
-        </div>
+        <input-checkbox v-model="data['checkboxSubscribe']"
+          >I want to subscribe to the email list</input-checkbox
+        >
+        <input-checkbox v-model="data['checkboxAcceptTerms']" :required="true"
+          >I accept Terms & Conditions</input-checkbox
+        >
+        <input-checkbox v-model="data['checkboxNotRobot']" :required="true"
+          >I am not a robot</input-checkbox
+        >
       </div>
 
       <button type="submit" @click="beforeSubmit()">Submit</button>
@@ -182,7 +108,9 @@
 
 <script>
 import InputText from "../components/InputText";
-// import InputBasic from "../components/InputBasic";
+import InputCheckbox from "../components/InputCheckbox";
+import InputRadio from "../components/InputRadio";
+import InputTextArea from "../components/InputTextArea";
 
 export default {
   name: "ContactUs",
@@ -191,7 +119,9 @@ export default {
   },
   components: {
     InputText,
-    // InputBasic
+    InputCheckbox,
+    InputRadio,
+    InputTextArea,
   },
   data: function () {
     return {
@@ -203,6 +133,9 @@ export default {
         department: null,
         "subject line": null,
         message: null,
+        checkboxNotRobot: false,
+        checkboxAcceptTerms: false,
+        checkboxSubscribe: false,
         checkboxValues: [],
       },
       errors: [],
@@ -210,11 +143,9 @@ export default {
   },
   methods: {
     submitToPHP() {
-
-        this.axios
+      this.axios
         .post(this.endpoint + "vue-contact-us-submit.php", this.data)
         .then(function (response) {
-
           console.log(response);
 
           if (response.data == 202) {
@@ -225,22 +156,18 @@ export default {
         })
         .catch(function (error) {
           console.error(error);
-         alert("Message Failed to Send.");
-
+          alert("Message Failed to Send.");
         });
     },
     beforeSubmit() {
-
       // check if all data values that are important are filled
       if (!this.isAllRequiredFilled(this.data)) return;
 
       // TODO: SANTIZIE INPUTS
       console.log("being sent", this.data);
 
-
       // Submit the Data
       this.submitToPHP();
-      console.log("I am submitting");
     },
     isEmailCorrect(email) {
       // yoinked from https://stackoverflow.com/a/9204568/4096078
@@ -250,32 +177,34 @@ export default {
     isAllRequiredFilled(data) {
       this.errors = [];
 
+      // TODO: Jump to error code
+
       // Copy the object to mutate safely
       // then get rid of non-neccessary data
-      let newData = Object.assign({}, data);
-      delete newData["company"];
+      let mutableData = Object.assign({}, data);
+      delete mutableData["company"];
 
       // check the object and add to errors
-      for (const key in newData) {
-        if (Array.isArray(newData[key])) break;
+      for (const key in mutableData) {
+        if (Array.isArray(mutableData[key])) break;
 
-        if (newData[key] == null || newData[key].trim() == "") {
+        if (mutableData[key] == null || mutableData[key].trim() == "") {
           const prettierWord = key[0].toUpperCase() + key.substring(1);
           this.errors.push(prettierWord + " cannot be empty");
         }
       }
 
       // validate email
-      if (!this.isEmailCorrect(newData["email"])) {
+      if (!this.isEmailCorrect(mutableData["email"])) {
         this.errors.push("The email does not look correct");
       }
 
       // check if checkbox Values exist
-      if (!newData.checkboxValues.includes("acceptTerms")) {
+      if (!mutableData.checkboxValues.includes("acceptTerms")) {
         this.errors.push("You must accept the terms");
       }
 
-      if (!newData.checkboxValues.includes("notRobot")) {
+      if (!mutableData.checkboxValues.includes("notRobot")) {
         this.errors.push("You must check that you are not a robot");
       }
 

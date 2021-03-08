@@ -1,6 +1,6 @@
 <template>
   <div class="form-input">
-    <label :for="inputID"><slot></slot><span v-show="required" class="red">*</span></label>
+    <label :for="inputID"><slot></slot><span v-if="required" class="red">*</span></label>
 
       <input
         v-bind="$attrs"
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
   props: {
     label: {
@@ -26,20 +28,20 @@ export default {
       default: "",
     },
     placeholder: {
-      type: [String],
+      type: String,
       default: "",
     },
     className: {
-      type: [String],
+      type: String,
       default: "",
     },
     required: {
-      type: [Boolean],
+      type: Boolean,
       default: false,
     },
     inputID: {
-        type: [String],
-        default: "1"
+        type: String,
+        default: uuidv4()
     }
   },
 };
