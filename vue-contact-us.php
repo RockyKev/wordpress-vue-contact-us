@@ -29,13 +29,16 @@
 if (!defined('WPINC')) {
 	die;
 }
-
-include_once('vue-test-send.php');
-include_once('vue-contact-us-settings-admin.php');
 /**
- * Currently plugin version.
+
+* Currently plugin version.
  */
 define('VUE_CONTACT_US', '1.0.0');
+
+
+/* Enter your code here */
+include_once('vue-contact-us-settings-admin.php');
+
 
 function vue_contact_us() {
     // get Vue libs

@@ -82,15 +82,15 @@
       </input-text-area>
 
       <div class="form-checkbox-group">
-        <input-checkbox v-model="data['checkboxSubscribe']"
-          >I want to subscribe to the email list</input-checkbox
-        >
-        <input-checkbox v-model="data['checkboxAcceptTerms']" :required="true"
-          >I accept Terms & Conditions</input-checkbox
-        >
-        <input-checkbox v-model="data['checkboxNotRobot']" :required="true"
-          >I am not a robot</input-checkbox
-        >
+        <input-checkbox v-model="data['checkboxSubscribe']">
+          I want to subscribe to the email list
+        </input-checkbox>
+        <input-checkbox v-model="data['checkboxAcceptTerms']" :required="true">
+          I accept Terms & Conditions
+        </input-checkbox>
+        <input-checkbox v-model="data['checkboxNotRobot']" :required="true">
+          I am not a robot
+        </input-checkbox>
       </div>
 
       <button type="submit" @click="beforeSubmit()">Submit</button>
@@ -163,7 +163,6 @@ export default {
       // check if all data values that are important are filled
       if (!this.isAllRequiredFilled(this.data)) return;
 
-      // TODO: SANTIZIE INPUTS
       console.log("being sent", this.data);
 
       // Submit the Data
