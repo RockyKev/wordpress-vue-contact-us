@@ -1,4 +1,4 @@
-# TITLE
+# Rocky's Awesome Kick-Ass Post
 
 ## Introduction
 
@@ -31,10 +31,15 @@ The focus is on PHP code. I'm assuming you are already proficient at Vue.
 ## STEP BY STEP:
 
 Step 1: Get your sendgrid API crednetials ready
+
 Step 2: Download my repo with a pre-built Vue Contact Us form.
+
 Step 3: Quickly understanding the Vue Contact Us form
+
 Step 4: Generate our Vue App as a shortcode
-Step 5: Create a WP Settings Page
+
+Step 5: Create a WP Settings Page  (Delete this line?)
+
 Step 6: Create the page where the Contact Us form takes in
 
 ### Step 1: Get your sendgrid API crednetials ready
