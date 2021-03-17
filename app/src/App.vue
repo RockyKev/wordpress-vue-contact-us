@@ -1,11 +1,12 @@
 <template>
   <div>
     <ContactUs :endpoint="wpPluginUri" />
+    POOP
   </div>
 </template>
 
 <script>
-import ContactUs from "./components/ContactUs.vue";
+import ContactUs from "./views/ContactUs.vue";
 
 export default {
   name: "App",
