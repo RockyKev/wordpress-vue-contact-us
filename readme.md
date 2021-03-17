@@ -29,6 +29,10 @@ https://vuejsexamples.com/simple-vue-js-contact-form/
 PHP Create a axios request
 https://phpforever.com/vuejs/vuejs-insert-data/
 
+Expect to shape it for PHP
+https://stackoverflow.com/a/51828968/4096078
+
+
 ## ABOUT PAGE: 
 
 REfernece:
