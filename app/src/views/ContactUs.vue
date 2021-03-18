@@ -10,10 +10,8 @@
         </ul>
       </div>
 
-      <h2>THIS IS EVERYTHING IN COMPONENTS</h2>
-
       <input-text
-        v-model="data['first name']"
+        v-model="userData['first name']"
         type="Text"
         :required="true"
         placeholder="Paul"
@@ -21,7 +19,7 @@
       >
 
       <input-text
-        v-model="data['last name']"
+        v-model="userData['last name']"
         type="Text"
         :required="true"
         placeholder="Rudd"
@@ -29,7 +27,7 @@
       >
 
       <input-text
-        v-model="data['email']"
+        v-model="userData['email']"
         type="Email"
         :required="true"
         placeholder="theemail@website.com"
@@ -37,7 +35,7 @@
       >
 
       <input-text
-        v-model="data['company']"
+        v-model="userData['company']"
         type="Text"
         :required="true"
         placeholder="Macrosoft"
@@ -48,26 +46,23 @@
       <div class="form-radio-group">
         <p>Department<span class="red">*</span>:</p>
         <input-radio
-          v-model="data['department']"
-          value="department123"
-          :inputID="butts"
+          v-model="userData['department']"
+          value="departmentCS"
+          required
           >Customer Service</input-radio
         >
 
-        <input-radio
-          v-model="data['department']"
-          value="departmentIT"
-          :inputID="nuutts"
+        <input-radio v-model="userData['department']" value="departmentIT"
           >IT Issue</input-radio
         >
 
-        <input-radio v-model="data['department']" value="departmentBill"
+        <input-radio v-model="userData['department']" value="departmentBill"
           >Billing</input-radio
         >
       </div>
 
       <input-text
-        v-model="data['subject line']"
+        v-model="userData['subject line']"
         type="Text"
         :required="true"
         placeholder="Reaching out for help"
@@ -75,20 +70,23 @@
       >
 
       <input-text-area
-        v-model="data['message']"
+        v-model="userData['message']"
         :required="true"
         placeholder="Enter your query here"
         >Message:
       </input-text-area>
 
       <div class="form-checkbox-group">
-        <input-checkbox v-model="data['checkboxSubscribe']">
+        <input-checkbox v-model="userData['checkboxSubscribe']">
           I want to subscribe to the email list
         </input-checkbox>
-        <input-checkbox v-model="data['checkboxAcceptTerms']" :required="true">
+        <input-checkbox
+          v-model="userData['checkboxAcceptTerms']"
+          :required="true"
+        >
           I accept Terms & Conditions
         </input-checkbox>
-        <input-checkbox v-model="data['checkboxNotRobot']" :required="true">
+        <input-checkbox v-model="userData['checkboxNotRobot']" :required="true">
           I am not a robot
         </input-checkbox>
       </div>
@@ -97,9 +95,9 @@
     </form>
 
     <div class="debug">
-      <h2>This data gets sent to PHP</h2>
+      <h2>This userData gets sent to PHP</h2>
       <pre>
-        <code>{{ data }}</code>
+        <code>{{ userData }}</code>
         <code>Endpoint:{{endpoint}}</code>
         </pre>
     </div>
@@ -125,7 +123,7 @@ export default {
   },
   data: function () {
     return {
-      data: {
+      userData: {
         "first name": null,
         "last name": null,
         email: null,
@@ -136,7 +134,6 @@ export default {
         checkboxNotRobot: false,
         checkboxAcceptTerms: false,
         checkboxSubscribe: false,
-        checkboxValues: [],
       },
       errors: [],
     };
@@ -144,7 +141,7 @@ export default {
   methods: {
     submitToPHP() {
       this.axios
-        .post(this.endpoint + "vue-contact-us-submit.php", this.data)
+        .post(this.endpoint + "vue-contact-us-submit.php", this.userData)
         .then(function (response) {
           console.log(response);
 
@@ -161,11 +158,11 @@ export default {
     },
     beforeSubmit() {
       // check if all data values that are important are filled
-      if (!this.isAllRequiredFilled(this.data)) return;
+      if (!this.isAllRequiredFilled(this.userData)) return;
 
-      console.log("being sent", this.data);
+      console.log("being sent", this.userData);
 
-      // Submit the Data
+      // Submit the userData
       this.submitToPHP();
     },
     isEmailCorrect(email) {
@@ -173,42 +170,49 @@ export default {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
     },
+    scrollToError() {
+      this.$el.querySelector("#form").scrollIntoView({ behavior: "smooth" });
+    },
     isAllRequiredFilled(data) {
       this.errors = [];
 
       // TODO: Jump to error code
 
       // Copy the object to mutate safely
-      // then get rid of non-neccessary data
+      // then get rid of elements that are not required.
       let mutableData = Object.assign({}, data);
       delete mutableData["company"];
-
-      // check the object and add to errors
-      for (const key in mutableData) {
-        if (Array.isArray(mutableData[key])) break;
-
-        if (mutableData[key] == null || mutableData[key].trim() == "") {
-          const prettierWord = key[0].toUpperCase() + key.substring(1);
-          this.errors.push(prettierWord + " cannot be empty");
-        }
-      }
+      delete mutableData["checkboxSubscribe"];
 
       // validate email
       if (!this.isEmailCorrect(mutableData["email"])) {
         this.errors.push("The email does not look correct");
       }
 
-      // check if checkbox Values exist
-      if (!mutableData.checkboxValues.includes("acceptTerms")) {
-        this.errors.push("You must accept the terms");
+      // check the object and add to errors
+      for (const key in mutableData) {
+        console.log("inside mutableData", key);
+
+        // If the key value is empty/null OR an empty string
+        if (!mutableData[key]) {
+          // Make the first letter capital
+          const prettierWord = key[0].toUpperCase() + key.substring(1);
+
+          // if it contains the checkbox text, give it a custom error
+          if (key.includes("checkboxNotRobot")) {
+            this.errors.push("You must confirm that you are not a robot");
+          } else if (key.includes("checkboxAcceptTerms")) {
+            this.errors.push("You must accept the terms");
+          } else {
+            this.errors.push(prettierWord + " cannot be empty");
+          }
+        }
       }
 
-      if (!mutableData.checkboxValues.includes("notRobot")) {
-        this.errors.push("You must check that you are not a robot");
-      }
+      // If there's any errors, jump to the error messages and return false
+      if (this.errors.length) {
+        this.scrollToError();
 
-      // If there's any errors, return false
-      if (this.errors.length > 1) {
         return false;
       } else {
         return true;
@@ -219,6 +223,10 @@ export default {
 </script>
 
 <style lang="scss">
+#form {
+  scroll-margin-top: 20ex;
+}
+
 button {
   margin-top: 3rem;
 }

@@ -17,11 +17,11 @@
  * Plugin URI:        #
  * Description:       This creates a Vue App that generates data to PHP and sends a email.
  * Version:           1.0.0
- * Author:            Your Name Here
+ * Author:            Rocky Kev
  * Author URI:        #
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       author-generator-vue
+ * Text Domain:       vue-contact-us
  * Domain Path:       /languages
  */
 

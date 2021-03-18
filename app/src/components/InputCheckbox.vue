@@ -1,13 +1,13 @@
 <template>
     <div class="form-checkbox">
         <input
-        :id="inputID"
+        :id="uniqueID"
         type="checkbox"
         :checked="modelValue"
         @change="$emit('update:modelValue', $event.target.checked)"
-        class="field"
+        :class="className"
         />
-        <label :for="inputID"><slot></slot><span v-if="required" class="red">*</span></label>
+        <label :for="uniqueID"><slot></slot><span v-if="required" class="red">*</span></label>
     </div>
 
 </template>
@@ -30,9 +30,24 @@ export default {
             default: false
         },
         inputID: {
+            type: [String, Number],
+        },
+        className: {
             type: String,
-            default: uuidv4()
+            default: ''
         }
+    },
+  data: function () {
+    return {
+      uniqueID: 0
     }
+ },
+ mounted() {
+     if (this.inputID) {
+         this.uniqueID = this.inputID;
+     } else {
+         this.uniqueID = uuidv4();
+     }
+ }
 }
 </script>
