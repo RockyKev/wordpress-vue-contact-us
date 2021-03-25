@@ -3,13 +3,13 @@
       <input
         type="radio"
         v-bind="$attrs"
-        :id="elementID"
+        :id="uniqueID"
         :class="className"
         :value="value"
         :checked="modelValue === value"
         @change="$emit('update:modelValue', value)"
       />
-      <label :for="elementID"><slot></slot><span v-if="required" class="red">*</span></label>
+      <label :for="uniqueID"><slot></slot></label>
 
     </div>
 
@@ -28,13 +28,8 @@ export default {
             type: [String, Number],
             required: true
         },
-        required: {
-            type: Boolean,
-            default: false
-        },
         inputID: {
             type: [String, Number],
-            default: uuidv4()
         },
         className: {
             type: String,
@@ -43,17 +38,14 @@ export default {
     },
  data: function () {
     return {
-      elementID: 0
+      uniqueID: 0
     }
  },
  mounted() {
-    console.log("MOUNT ME")
      if (this.inputID) {
-         console.log("already has ID")
-         this.elementID = this.inputID;
+         this.uniqueID = this.inputID;
      } else {
-         this.elementID = uuidv4();
-         console.log("random me", this.elementID)
+         this.uniqueID = uuidv4();
      }
  }
 }

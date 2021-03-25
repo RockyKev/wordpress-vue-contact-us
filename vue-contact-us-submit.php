@@ -48,7 +48,11 @@ function send_contactus_email_sendgrid($data, $config) {
       'company' => FILTER_SANITIZE_STRING,
       'department' => FILTER_SANITIZE_STRING,
       'subject line' => FILTER_SANITIZE_STRING,
-      'messaage' => FILTER_SANITIZE_STRING
+      'message' => FILTER_SANITIZE_STRING,
+      'checkboxNotRobot' => FILTER_VALIDATE_BOOLEAN,
+      'checkboxAcceptTerms'=> FILTER_VALIDATE_BOOLEAN,
+      'checkboxSubscribe'=> FILTER_VALIDATE_BOOLEAN,
+
    ]);
 
    // compile email content
