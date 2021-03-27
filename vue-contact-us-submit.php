@@ -1,21 +1,7 @@
 <?php
 
-<<<<<<< HEAD
-echo "It worked!";
-
-
-if( isset($_POST['firstName']) && isset($_POST['lastName'])) {
-    echo $_POST['firstName'];
-    echo $_POST['lastName'];      
- } else {  
-    echo 'Data not received';
- }
- 
-die;
-=======
 // we need to pull in sendgrid-php api
 require_once('sendgrid-php/vendor/autoload.php');
->>>>>>> 14e1379bf5f04dc17562c7318a377497834cffeb
 
 // SO WE NEED TO SUMMON WORDPRESS -- https://stackoverflow.com/a/19327058/4096078
 define('WP_USE_THEMES', false); // Don't load theme support functionality
