@@ -35,27 +35,4 @@ if (!defined('WPINC')) {
  */
 define('VUE_CONTACT_US', '1.0.0');
 
-
-/* Enter your code here */
-include_once('vue-contact-us-settings-admin.php');
-
-
-function vue_contact_us() {
-    // get Vue libs
-	wp_register_script('vue-app-vendors',  plugins_url('app/dist/js/chunk-vendors.js', __FILE__), array(), '1.0.0');
-	wp_register_script('my-vue-app', plugins_url('app/dist/js/app.js', __FILE__), array('vue-app-vendors'), '1.0.0');
-
-	// pass the scripts to WP
-	wp_enqueue_script('vue-app-vendors');
-	wp_enqueue_script('my-vue-app');
-    wp_enqueue_style('my-vue-app',  plugins_url('app/dist/css/app.css', __FILE__),   array(),  '1.0.0');
-
-	// pass plugin directory
-	$wp_plugin_uri = plugin_dir_url( __FILE__ );
-
-	wp_localize_script('my-vue-app', 'wpPluginUri', $wp_plugin_uri);
-
-    return '<div id="app"></div>';
-}
-
-add_shortcode('contact-us-vue', 'vue_contact_us');
+// We'll fill this code in Step 4: Generate our Contact Us Vue App as a shortcode
